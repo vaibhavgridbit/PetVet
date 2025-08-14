@@ -8,20 +8,36 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials, {rejectWithValue}) => {
     try {
-      // TODO: Replace with actual API call
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
+      // Mock authentication for Phase 1 MVP
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      
+      // Demo credentials
+      const validCredentials = [
+        { email: 'demo@petvet.com', password: 'demo123' },
+        { email: 'test@example.com', password: 'test123' },
+        { email: 'user@petvet.com', password: 'user123' }
+      ];
 
-      if (!response.ok) {
-        throw new Error('Login failed');
+      const isValidLogin = validCredentials.some(
+        cred => cred.email === credentials.email && cred.password === credentials.password
+      );
+
+      if (!isValidLogin) {
+        throw new Error('Invalid email or password');
       }
 
-      const data = await response.json();
+      const mockUser = {
+        id: '1',
+        name: 'Demo User',
+        email: credentials.email,
+        phone: '+1234567890',
+        profileImage: '',
+      };
+
+      const data = {
+        token: 'mock_jwt_token_' + Date.now(),
+        user: mockUser,
+      };
 
       // Store token in AsyncStorage
       await AsyncStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.token);
@@ -43,20 +59,30 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData: RegisterData, {rejectWithValue}) => {
     try {
-      // TODO: Replace with actual API call
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+      // Mock registration for Phase 1 MVP
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
 
-      if (!response.ok) {
-        throw new Error('Registration failed');
+      // Basic validation
+      if (!userData.email || !userData.password || !userData.name) {
+        throw new Error('Please fill in all required fields');
       }
 
-      const data = await response.json();
+      if (userData.password.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+      }
+
+      const mockUser = {
+        id: 'user_' + Date.now(),
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone || '',
+        profileImage: '',
+      };
+
+      const data = {
+        token: 'mock_jwt_token_' + Date.now(),
+        user: mockUser,
+      };
 
       // Store token in AsyncStorage
       await AsyncStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.token);
