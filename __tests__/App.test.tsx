@@ -12,6 +12,9 @@ import {it} from '@jest/globals';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
+import {Animated, Platform} from 'react-native';
+console.log('Animated is:', typeof Animated, Animated ? Object.keys(Animated) : 'null');
+
 it('renders correctly', () => {
   renderer.create(<App />);
 });

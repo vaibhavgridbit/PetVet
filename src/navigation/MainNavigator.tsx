@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainTabParamList} from '../types/navigation';
 import {Colors} from '../constants';
@@ -11,10 +12,9 @@ import EmergencyScreen from '../screens/emergency/EmergencyScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
 // Icons - using simple text for now, can be replaced with vector icons later
-const TabIcon: React.FC<{name: string; focused: boolean}> = ({
-  name,
-  focused,
-}) => <>{name}</>;
+const TabIcon: React.FC<{name: string; focused: boolean}> = ({name}) => (
+  <Text style={{fontSize: 20}}>{name}</Text>
+);
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
